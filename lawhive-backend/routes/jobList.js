@@ -15,9 +15,12 @@ router.get("/joblist", async (req, res) => {
 router.post("/joblist", async (req, res) => {
 	let joblist
 	try {
+		console.log(req.body)
 		joblist = new JobList({
 			title: req.body.title,
 			description: req.body.description,
+			feeStructure: req.body.feeStructure,
+			fee: req.body.fee,
 			state: "started",
 		})
 		const result = await joblist.save()

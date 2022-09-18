@@ -1,6 +1,7 @@
 import { Button, Stack, Textarea, TextInput } from "@mantine/core"
 import { useState } from "react"
 import { formDataTypes } from "../../../utils/types"
+import FeeStructure from "./FeeStructure"
 
 interface NewJobFormProps {
 	formDataHandler: (formData: formDataTypes) => void
@@ -15,15 +16,26 @@ const NewJobForm: React.FC<NewJobFormProps> = ({
 	const [formData, setFormData] = useState<formDataTypes>({
 		title: "",
 		description: "",
+		feeStructure: "",
+		fee: "",
 	})
 
 	function onChangeHandler(
-		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+		e: string | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | null
 	) {
+		let keyName: string, keyValue: string
+		//Select Element in MantineUI is not a valid HTML select element thus requires the below code
+		if (typeof e === "string") {
+			keyName = "feeStructure"
+			keyValue = e
+		} else if (e !== null) {
+			keyName = e.target.name
+			keyValue = e.target.value
+		} else return
 		setFormData((prev) => {
 			return {
 				...prev,
-				[e.target.name]: e.target.value,
+				[keyName]: keyValue,
 			}
 		})
 	}
@@ -46,6 +58,8 @@ const NewJobForm: React.FC<NewJobFormProps> = ({
 		const data: formDataTypes = {
 			title: formData.title.trim(),
 			description: formData.description.trim(),
+			feeStructure: formData.feeStructure,
+			fee: formData.fee,
 		}
 		if (!inputDataValidation(data.title)) return
 		formDataHandler(data)
@@ -59,7 +73,6 @@ const NewJobForm: React.FC<NewJobFormProps> = ({
 				<TextInput
 					name="title"
 					error={titleError}
-					// minLength={6}
 					value={formData.title}
 					onChange={onChangeHandler}
 					placeholder="Job Title"
@@ -76,6 +89,11 @@ const NewJobForm: React.FC<NewJobFormProps> = ({
 					label="Description"
 					withAsterisk
 					required
+				/>
+				<FeeStructure
+					feeStructureValue={formData.feeStructure}
+					feeValue={formData.fee}
+					onChange={onChangeHandler}
 				/>
 				<Button color={"pink"} type="submit" uppercase>
 					Submit

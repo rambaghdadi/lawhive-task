@@ -12,6 +12,12 @@ const jobListSchema = new Schema(
 		state: {
 			type: String,
 		},
+		fee: {
+			type: String,
+		},
+		feeStructure: {
+			type: String,
+		},
 	},
 	{ timestamps: true }
 )

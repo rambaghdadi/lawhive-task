@@ -1,4 +1,4 @@
-import { Badge, Card, Grid, Group, Stack, Text } from "@mantine/core"
+import { Badge, Card, Grid, Group, Space, Text } from "@mantine/core"
 import { jobListingTypes } from "../../../utils/types"
 
 interface JobsListProps {
@@ -11,8 +11,8 @@ const JobsList: React.FC<JobsListProps> = ({ data }) => {
 
 	return (
 		<Grid>
-			{data.map((job: jobListingTypes) => (
-				<Grid.Col span={6}>
+			{data.map((job: jobListingTypes, i: number) => (
+				<Grid.Col key={i} span={6}>
 					<Card
 						style={{ minHeight: 180 }}
 						shadow="sm"
@@ -23,13 +23,24 @@ const JobsList: React.FC<JobsListProps> = ({ data }) => {
 						<Group position="apart" mt="md" mb="xs">
 							<Text weight={500}>{job.title}</Text>
 							<Badge color="pink" variant="light">
-								{job.progress}
+								{job.state}
 							</Badge>
 						</Group>
 
 						<Text size="sm" color="dimmed">
 							{job.description}
 						</Text>
+						<Space h={"lg"} />
+						<Group>
+							<Badge color="cyan" variant="light">
+								{job.feeStructure.split(/(?=[A-Z])/).join("-")}
+							</Badge>
+							<Badge color="cyan" variant="light">
+								{job.feeStructure === "fixedFee"
+									? `£${job.fee}`
+									: `${job.fee}%`}
+							</Badge>
+						</Group>
 					</Card>
 				</Grid.Col>
 			))}
