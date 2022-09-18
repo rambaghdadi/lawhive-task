@@ -1,0 +1,46 @@
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+html {
+	height: 100%;
+}
+
+html,
+body {
+	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+		Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+body {
+	height: 100%;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.signup,
+.signin {
+	max-width: 70rem;
+	margin: 0 auto;
+	margin-top: 15rem;
+	height: calc(100vh - 15rem);
+	padding: 0 2rem;
+}
+
+.signup h1,
+.signin h1 {
+	font-size: 3rem;
+	margin-bottom: 5rem;
+}
+
+.signup form,
+.signin form {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+}

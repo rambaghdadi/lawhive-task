@@ -1,0 +1,12 @@
+.header {
+	padding: 1.5rem;
+	background-color: rgb(53, 47, 119);
+
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+
+	align-items: center;
+	justify-items: center;
+	color: white;
+	margin-bottom: 5rem;
+}
