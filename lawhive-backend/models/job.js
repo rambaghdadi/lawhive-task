@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 
 const Schema = mongoose.Schema
-const jobListSchema = new Schema(
+const jobSchema = new Schema(
 	{
 		title: {
 			type: String,
@@ -12,14 +12,23 @@ const jobListSchema = new Schema(
 		state: {
 			type: String,
 		},
-		fee: {
+		feeStructure: {
 			type: String,
 		},
-		feeStructure: {
+		feeAmount: {
+			type: String,
+		},
+		feePercentage: {
+			type: String,
+		},
+		settlementAmount: {
+			type: String,
+		},
+		amountPaid: {
 			type: String,
 		},
 	},
 	{ timestamps: true }
 )
 
-export const JobList = mongoose.model("JobList", jobListSchema)
+export const Job = mongoose.model("Job", jobSchema)

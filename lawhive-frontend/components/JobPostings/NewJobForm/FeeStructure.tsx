@@ -4,6 +4,7 @@ import React from "react"
 interface FeeStructureProps {
 	onChange: (e: string | React.ChangeEvent<HTMLInputElement> | null) => void
 	feeValue: string
+	feePercentage: string
 	feeStructureValue: string
 }
 
@@ -11,6 +12,7 @@ const FeeStructure: React.FC<FeeStructureProps> = ({
 	onChange,
 	feeStructureValue,
 	feeValue,
+	feePercentage,
 }) => {
 	return (
 		<>
@@ -27,19 +29,29 @@ const FeeStructure: React.FC<FeeStructureProps> = ({
 					{ value: "fixedFee", label: "Fixed-Fee" },
 				]}
 			/>
-			{feeStructureValue && (
+			{feeStructureValue === "fixedFee" && (
 				<TextInput
-					name="fee"
+					name="feeAmount"
 					value={feeValue}
 					onChange={onChange}
 					type={"number"}
 					min={"0"}
-					placeholder={
-						feeStructureValue === "noWinNoFee" ? "Fee Percentage" : "Fee Amount"
-					}
-					label={
-						feeStructureValue === "noWinNoFee" ? "Fee Percentage" : "Fee Amount"
-					}
+					placeholder={"Fee Amount"}
+					label={"Fee Amount"}
+					variant="filled"
+					withAsterisk
+					required
+				/>
+			)}
+			{feeStructureValue === "noWinNoFee" && (
+				<TextInput
+					name="feePercentage"
+					value={feePercentage}
+					onChange={onChange}
+					type={"number"}
+					min={"0"}
+					placeholder={"Fee Percentage"}
+					label={"Fee Percentage"}
 					variant="filled"
 					withAsterisk
 					required

@@ -17,7 +17,8 @@ const NewJobForm: React.FC<NewJobFormProps> = ({
 		title: "",
 		description: "",
 		feeStructure: "",
-		fee: "",
+		feeAmount: "",
+		feePercentage: "",
 	})
 
 	function onChangeHandler(
@@ -59,7 +60,8 @@ const NewJobForm: React.FC<NewJobFormProps> = ({
 			title: formData.title.trim(),
 			description: formData.description.trim(),
 			feeStructure: formData.feeStructure,
-			fee: formData.fee,
+			feeAmount: formData.feeAmount,
+			feePercentage: formData.feePercentage,
 		}
 		if (!inputDataValidation(data.title)) return
 		formDataHandler(data)
@@ -92,7 +94,8 @@ const NewJobForm: React.FC<NewJobFormProps> = ({
 				/>
 				<FeeStructure
 					feeStructureValue={formData.feeStructure}
-					feeValue={formData.fee}
+					feePercentage={formData.feePercentage}
+					feeValue={formData.feeAmount}
 					onChange={onChangeHandler}
 				/>
 				<Button color={"pink"} type="submit" uppercase>

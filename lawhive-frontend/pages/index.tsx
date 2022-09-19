@@ -3,7 +3,6 @@ import type { NextPage } from "next"
 import { useEffect, useState } from "react"
 import Header from "../components/Header/Header"
 import JobsList from "../components/JobPostings/JobsList/JobsList"
-import NewJobForm from "../components/JobPostings/NewJobForm/NewJobForm"
 import { formDataTypes, jobListingTypes } from "../utils/types"
 
 const Home: NextPage = () => {
@@ -46,6 +45,31 @@ const Home: NextPage = () => {
 		}
 	}
 
+	async function payfixedFeeHandler(id: string) {
+		const response = await fetch(`http://localhost:4000/api/job/pay/${id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+		const data = await response.json()
+		getJobs()
+	}
+
+	async function paySettlementHandler(id: string, settlementAmount: string) {
+		const response = await fetch(`http://localhost:4000/api/job/pay/${id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				settlementAmount: settlementAmount,
+			}),
+		})
+		const data = await response.json()
+		getJobs()
+	}
+
 	return (
 		<>
 			<Header formDataHandler={formDataHandler} />
@@ -56,7 +80,11 @@ const Home: NextPage = () => {
 					) : error ? (
 						<p>Error. Please try again later.</p>
 					) : (
-						<JobsList data={jobs} />
+						<JobsList
+							paySettlementHandler={paySettlementHandler}
+							payfixedFeeHandler={payfixedFeeHandler}
+							data={jobs}
+						/>
 					)}
 				</Stack>
 			</Container>

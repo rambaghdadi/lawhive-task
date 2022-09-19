@@ -2,13 +2,18 @@ export interface formDataTypes {
 	title: string
 	description: string
 	feeStructure: string
-	fee: string
+	feeAmount: string
+	feePercentage: string
 }
 
 export interface jobListingTypes {
+	_id: string
 	title: string
 	description: string
 	state: string
 	feeStructure: string
-	fee: string
+	feePercentage: string
+	feeAmount: string
+	settlementAmount: string
+	amountPaid: string
 }

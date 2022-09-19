@@ -1,6 +1,6 @@
 import express from "express"
 import mongoose from "mongoose"
-import jobListRoutes from "./routes/jobList.js"
+import jobRoutes from "./routes/job.js"
 import authRoutes from "./routes/auth.js"
 
 const app = express()
@@ -16,7 +16,7 @@ app.use((req, res, next) => {
 	next()
 })
 
-app.use("/api", jobListRoutes)
+app.use("/api", jobRoutes)
 app.use("/api", authRoutes)
 
 mongoose
