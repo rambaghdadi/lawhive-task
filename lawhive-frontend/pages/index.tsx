@@ -8,6 +8,7 @@ import { formDataTypes, jobListingTypes } from "../utils/types"
 const Home: NextPage = () => {
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState(false)
+	const [settlementError, setSettlementError] = useState("")
 	const [jobs, setJobs] = useState<jobListingTypes[]>([])
 
 	useEffect(() => {
@@ -20,6 +21,7 @@ const Home: NextPage = () => {
 			setLoading(true)
 			const response = await fetch(`http://localhost:4000/api/joblist`)
 			const data = await response.json()
+			if (!response.ok) throw new Error(data)
 			setJobs(data.items)
 			setLoading(false)
 		} catch (error) {
@@ -39,6 +41,7 @@ const Home: NextPage = () => {
 				body: JSON.stringify(formData),
 			})
 			const data = await response.json()
+			if (!response.ok) throw new Error(data)
 			getJobs()
 		} catch (error) {
 			console.error(error)
@@ -46,28 +49,41 @@ const Home: NextPage = () => {
 	}
 
 	async function payfixedFeeHandler(id: string) {
-		const response = await fetch(`http://localhost:4000/api/job/pay/${id}`, {
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		})
-		const data = await response.json()
-		getJobs()
+		try {
+			const response = await fetch(`http://localhost:4000/api/job/pay/${id}`, {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			})
+			const data = await response.json()
+			if (!response.ok) throw new Error(data)
+			getJobs()
+		} catch (error) {
+			console.error(error)
+		}
 	}
 
 	async function paySettlementHandler(id: string, settlementAmount: string) {
-		const response = await fetch(`http://localhost:4000/api/job/pay/${id}`, {
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				settlementAmount: settlementAmount,
-			}),
-		})
-		const data = await response.json()
-		getJobs()
+		try {
+			setSettlementError("")
+			const response = await fetch(`http://localhost:4000/api/job/pay/${id}`, {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					settlementAmount: settlementAmount,
+				}),
+			})
+			const data = await response.json()
+			if (!response.ok) throw new Error(data.message)
+			getJobs()
+		} catch (error) {
+			console.log(error)
+			const err = error as Error
+			setSettlementError(err.message)
+		}
 	}
 
 	return (
@@ -81,6 +97,8 @@ const Home: NextPage = () => {
 						<p>Error. Please try again later.</p>
 					) : (
 						<JobsList
+							resetError={() => setSettlementError("")}
+							error={settlementError}
 							paySettlementHandler={paySettlementHandler}
 							payfixedFeeHandler={payfixedFeeHandler}
 							data={jobs}

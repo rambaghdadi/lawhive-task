@@ -21,6 +21,7 @@ router.post("/joblist", async (req, res) => {
 			feeStructure: req.body.feeStructure,
 			feeAmount: req.body.feeAmount,
 			feePercentage: req.body.feePercentage,
+			expectedSettlementAmount: req.body.expectedSettlementAmount,
 			state: "started",
 		})
 		const result = await job.save()
@@ -36,6 +37,14 @@ router.put("/job/pay/:jobId", async (req, res) => {
 		const job = await Job.findById(id)
 		if (job.feeStructure === "fixedFee") {
 			job.amountPaid = job.feeAmount
+		} else if (req.body.settlementAmount > job.expectedSettlementAmount * 1.1) {
+			throw new Error(
+				"Value entered is more than the expected settlement amount."
+			)
+		} else if (req.body.settlementAmount < job.expectedSettlementAmount * 0.9) {
+			throw new Error(
+				"Value entered is less than the expected settlement amount."
+			)
 		} else {
 			job.amountPaid = req.body.settlementAmount * (job.feePercentage / 100)
 		}

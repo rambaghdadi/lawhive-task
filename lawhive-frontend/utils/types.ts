@@ -4,6 +4,7 @@ export interface formDataTypes {
 	feeStructure: string
 	feeAmount: string
 	feePercentage: string
+	expectedSettlementAmount: string
 }
 
 export interface jobListingTypes {

@@ -19,6 +19,7 @@ const NewJobForm: React.FC<NewJobFormProps> = ({
 		feeStructure: "",
 		feeAmount: "",
 		feePercentage: "",
+		expectedSettlementAmount: "",
 	})
 
 	function onChangeHandler(
@@ -62,6 +63,7 @@ const NewJobForm: React.FC<NewJobFormProps> = ({
 			feeStructure: formData.feeStructure,
 			feeAmount: formData.feeAmount,
 			feePercentage: formData.feePercentage,
+			expectedSettlementAmount: formData.expectedSettlementAmount,
 		}
 		if (!inputDataValidation(data.title)) return
 		formDataHandler(data)
@@ -98,6 +100,18 @@ const NewJobForm: React.FC<NewJobFormProps> = ({
 					feeValue={formData.feeAmount}
 					onChange={onChangeHandler}
 				/>
+				{formData.feeStructure === "noWinNoFee" && (
+					<TextInput
+						name="expectedSettlementAmount"
+						type={"number"}
+						value={formData.expectedSettlementAmount}
+						onChange={onChangeHandler}
+						placeholder="Expected Settlement Amount"
+						label="Amount"
+						withAsterisk
+						required
+					/>
+				)}
 				<Button color={"pink"} type="submit" uppercase>
 					Submit
 				</Button>
@@ -105,8 +119,5 @@ const NewJobForm: React.FC<NewJobFormProps> = ({
 		</form>
 	)
 }
-
-//TODO validation
-//TODO onChange vs useRef
 
 export default NewJobForm

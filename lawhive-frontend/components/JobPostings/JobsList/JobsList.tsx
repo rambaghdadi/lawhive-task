@@ -16,12 +16,16 @@ interface JobsListProps {
 	data: jobListingTypes[]
 	payfixedFeeHandler: (id: string) => void
 	paySettlementHandler: (id: string, settlementAmount: string) => void
+	error: string
+	resetError: () => void
 }
 
 const JobsList: React.FC<JobsListProps> = ({
 	data,
 	payfixedFeeHandler,
 	paySettlementHandler,
+	error,
+	resetError,
 }) => {
 	const [payStatus, setPayStatus] = useState(false)
 	const [settlementValue, setSettlementValue] = useState("")
@@ -31,7 +35,7 @@ const JobsList: React.FC<JobsListProps> = ({
 
 	return (
 		<Grid>
-			{data.map((job: jobListingTypes, i: number) => (
+			{data.map((job: jobListingTypes) => (
 				<Grid.Col key={job._id} span={6}>
 					<Card
 						style={{ minHeight: 220 }}
@@ -85,12 +89,20 @@ const JobsList: React.FC<JobsListProps> = ({
 											color="violet"
 											compact
 											uppercase
-											onClick={() => setPayStatus(!payStatus)}
+											onClick={() => {
+												setPayStatus(!payStatus)
+											}}
 										>
 											Pay Now
 										</Button>
 									) : (
 										<SettlementForm
+											error={error}
+											cancelOnClick={() => {
+												setPayStatus(!payStatus)
+												setSettlementValue("")
+												resetError()
+											}}
 											onSubmit={(e) => {
 												e.preventDefault()
 												paySettlementHandler(job._id, settlementValue)
@@ -98,6 +110,7 @@ const JobsList: React.FC<JobsListProps> = ({
 											onChange={(e) => {
 												e.preventDefault()
 												setSettlementValue(e.target.value)
+												resetError()
 											}}
 											settlementValue={settlementValue}
 										/>

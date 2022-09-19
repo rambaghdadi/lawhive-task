@@ -21,6 +21,9 @@ const jobSchema = new Schema(
 		feePercentage: {
 			type: String,
 		},
+		expectedSettlementAmount: {
+			type: String,
+		},
 		settlementAmount: {
 			type: String,
 		},
