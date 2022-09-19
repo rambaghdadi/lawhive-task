@@ -26,9 +26,9 @@ Note: In order to use solicitor functionality - such as creating new jobs, simpl
 - Introduce Animations
 
 ## Weaknesses / TradeOffs
--Commit messages weren't detailed enough
--No unit testing - although E2E testing was carried out
--Either backend or frontend validation was used on the forms, not both due to time, although different appraoches throughout the code base were taken to showcase skills
--Not enough time to implement Story 5 - although my approach can be discussed in the follow up call. I would probably end up using Pupetteer or a similar package to scrape the article
--The backend code (express) should have used Typescript
+- Commit messages weren't detailed enough
+- No unit testing - although E2E testing was carried out
+- Either backend or frontend validation was used on the forms, not both due to time, although different appraoches throughout the code base were taken to showcase skills
+- Not enough time to implement Story 5 - although my approach can be discussed in the follow up call. I would probably end up using Pupetteer or a similar package to scrape the article
+- The backend code (express) should have used Typescript
 
