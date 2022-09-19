@@ -1,19 +1,9 @@
-import {
-	Badge,
-	Button,
-	Card,
-	Grid,
-	Group,
-	Space,
-	Stack,
-	Text,
-} from "@mantine/core"
-import { useState } from "react"
-import { jobListingTypes } from "../../../utils/types"
-import SettlementForm from "./SettlementForm"
+import { Grid } from "@mantine/core"
+import { JobListingTypes } from "../../../utils/types"
+import Job from "./Job"
 
 interface JobsListProps {
-	data: jobListingTypes[]
+	data: JobListingTypes[]
 	payfixedFeeHandler: (id: string) => void
 	paySettlementHandler: (id: string, settlementAmount: string) => void
 	error: string
@@ -27,102 +17,20 @@ const JobsList: React.FC<JobsListProps> = ({
 	error,
 	resetError,
 }) => {
-	const [payStatus, setPayStatus] = useState(false)
-	const [settlementValue, setSettlementValue] = useState("")
-
 	if (data.length < 1)
 		return <p>There's no job listings currently available. Come back soon!</p>
 
 	return (
 		<Grid>
-			{data.map((job: jobListingTypes) => (
+			{data.map((job: JobListingTypes) => (
 				<Grid.Col key={job._id} span={6}>
-					<Card
-						style={{ minHeight: 220 }}
-						shadow="sm"
-						p="lg"
-						radius="md"
-						withBorder
-					>
-						<Group position="apart" mt="md" mb="xs">
-							<Text weight={500}>{job.title}</Text>
-							<Badge color="pink" variant="light">
-								{job.state}
-							</Badge>
-						</Group>
-
-						<Text size="sm" color="dimmed">
-							{job.description}
-						</Text>
-						<Stack>
-							<Space h={"lg"} />
-							<Group>
-								<Badge color="cyan" variant="light">
-									{job.feeStructure.split(/(?=[A-Z])/).join("-")}
-								</Badge>
-								<Badge color="cyan" variant="light">
-									{job.feeStructure === "fixedFee"
-										? `£${job.feeAmount}`
-										: `${job.feePercentage}%`}
-								</Badge>
-							</Group>
-
-							{job.feeStructure === "fixedFee" && job.state !== "Paid" ? (
-								<Button
-									onClick={() => payfixedFeeHandler(job._id)}
-									color="violet"
-									compact
-									uppercase
-								>
-									Pay Now
-								</Button>
-							) : job.feeStructure === "fixedFee" && job.state === "Paid" ? (
-								<Text color={"dimmed"} size={"sm"} weight={500}>
-									Amount Paid: £{job.amountPaid}
-								</Text>
-							) : null}
-
-							{job.feeStructure === "noWinNoFee" && job.state !== "Paid" ? (
-								<>
-									{!payStatus ? (
-										<Button
-											color="violet"
-											compact
-											uppercase
-											onClick={() => {
-												setPayStatus(!payStatus)
-											}}
-										>
-											Pay Now
-										</Button>
-									) : (
-										<SettlementForm
-											error={error}
-											cancelOnClick={() => {
-												setPayStatus(!payStatus)
-												setSettlementValue("")
-												resetError()
-											}}
-											onSubmit={(e) => {
-												e.preventDefault()
-												paySettlementHandler(job._id, settlementValue)
-											}}
-											onChange={(e) => {
-												e.preventDefault()
-												setSettlementValue(e.target.value)
-												resetError()
-											}}
-											settlementValue={settlementValue}
-										/>
-									)}
-								</>
-							) : job.feeStructure === "noWinNoFee" && job.state === "Paid" ? (
-								<Text color={"dimmed"} size={"sm"} weight={500}>
-									Amount Paid: £{job.amountPaid}
-								</Text>
-							) : null}
-						</Stack>
-					</Card>
+					<Job
+						job={job}
+						payfixedFeeHandler={payfixedFeeHandler}
+						paySettlementHandler={paySettlementHandler}
+						error={error}
+						resetError={resetError}
+					/>
 				</Grid.Col>
 			))}
 		</Grid>

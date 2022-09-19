@@ -1,4 +1,4 @@
-export interface formDataTypes {
+export interface FormDataTypes {
 	title: string
 	description: string
 	feeStructure: string
@@ -7,7 +7,7 @@ export interface formDataTypes {
 	expectedSettlementAmount: string
 }
 
-export interface jobListingTypes {
+export interface JobListingTypes {
 	_id: string
 	title: string
 	description: string
@@ -17,4 +17,15 @@ export interface jobListingTypes {
 	feeAmount: string
 	settlementAmount: string
 	amountPaid: string
+	expectedSettlementAmount: string
+}
+
+export enum StateEnum {
+	STARTED = "started",
+	PAID = "Paid",
+}
+
+export enum FeeStructureEnum {
+	NoWinNoFee = "noWinNoFee",
+	FixedFee = "fixedFee",
 }

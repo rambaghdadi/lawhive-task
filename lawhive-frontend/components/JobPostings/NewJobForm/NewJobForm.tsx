@@ -1,10 +1,10 @@
 import { Button, Stack, Textarea, TextInput } from "@mantine/core"
 import { useState } from "react"
-import { formDataTypes } from "../../../utils/types"
+import { FeeStructureEnum, FormDataTypes } from "../../../utils/types"
 import FeeStructure from "./FeeStructure"
 
 interface NewJobFormProps {
-	formDataHandler: (formData: formDataTypes) => void
+	formDataHandler: (formData: FormDataTypes) => void
 	closeModal: () => void
 }
 
@@ -13,10 +13,10 @@ const NewJobForm: React.FC<NewJobFormProps> = ({
 	closeModal,
 }) => {
 	const [titleError, setTitleError] = useState("")
-	const [formData, setFormData] = useState<formDataTypes>({
+	const [formData, setFormData] = useState<FormDataTypes>({
 		title: "",
 		description: "",
-		feeStructure: "",
+		feeStructure: FeeStructureEnum.NoWinNoFee,
 		feeAmount: "",
 		feePercentage: "",
 		expectedSettlementAmount: "",
@@ -42,7 +42,7 @@ const NewJobForm: React.FC<NewJobFormProps> = ({
 		})
 	}
 
-	function inputDataValidation(title: formDataTypes["title"]): boolean {
+	function inputDataValidation(title: FormDataTypes["title"]): boolean {
 		if (title.length < 6) {
 			setTitleError("Min number of characters is 6.")
 			return false
@@ -57,7 +57,7 @@ const NewJobForm: React.FC<NewJobFormProps> = ({
 
 	function formSubmitHandler(e: React.ChangeEvent<HTMLFormElement>): void {
 		e.preventDefault()
-		const data: formDataTypes = {
+		const data: FormDataTypes = {
 			title: formData.title.trim(),
 			description: formData.description.trim(),
 			feeStructure: formData.feeStructure,
@@ -100,14 +100,14 @@ const NewJobForm: React.FC<NewJobFormProps> = ({
 					feeValue={formData.feeAmount}
 					onChange={onChangeHandler}
 				/>
-				{formData.feeStructure === "noWinNoFee" && (
+				{formData.feeStructure === FeeStructureEnum.NoWinNoFee && (
 					<TextInput
 						name="expectedSettlementAmount"
 						type={"number"}
 						value={formData.expectedSettlementAmount}
 						onChange={onChangeHandler}
-						placeholder="Expected Settlement Amount"
-						label="Amount"
+						placeholder="Amount"
+						label="Expected Settlement Amount"
 						withAsterisk
 						required
 					/>

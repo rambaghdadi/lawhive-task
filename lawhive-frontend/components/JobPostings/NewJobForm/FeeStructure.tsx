@@ -1,5 +1,6 @@
 import { Select, TextInput } from "@mantine/core"
 import React from "react"
+import { FeeStructureEnum } from "../../../utils/types"
 
 interface FeeStructureProps {
 	onChange: (e: string | React.ChangeEvent<HTMLInputElement> | null) => void
@@ -25,11 +26,11 @@ const FeeStructure: React.FC<FeeStructureProps> = ({
 				name="feeStructure"
 				required
 				data={[
-					{ value: "noWinNoFee", label: "No-Win-No-Fee" },
-					{ value: "fixedFee", label: "Fixed-Fee" },
+					{ value: FeeStructureEnum.NoWinNoFee, label: "No-Win-No-Fee" },
+					{ value: FeeStructureEnum.FixedFee, label: "Fixed-Fee" },
 				]}
 			/>
-			{feeStructureValue === "fixedFee" && (
+			{feeStructureValue === FeeStructureEnum.FixedFee && (
 				<TextInput
 					name="feeAmount"
 					value={feeValue}
@@ -43,12 +44,13 @@ const FeeStructure: React.FC<FeeStructureProps> = ({
 					required
 				/>
 			)}
-			{feeStructureValue === "noWinNoFee" && (
+			{feeStructureValue === FeeStructureEnum.NoWinNoFee && (
 				<TextInput
 					name="feePercentage"
 					value={feePercentage}
 					onChange={onChange}
 					type={"number"}
+					max={"100"}
 					min={"0"}
 					placeholder={"Fee Percentage"}
 					label={"Fee Percentage"}

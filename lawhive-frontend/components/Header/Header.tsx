@@ -2,12 +2,12 @@ import { Button, Group, Modal } from "@mantine/core"
 import Link from "next/link"
 import { useState } from "react"
 import { useAuth } from "../../contexts/authContext"
-import { formDataTypes } from "../../utils/types"
+import { FormDataTypes } from "../../utils/types"
 import NewJobForm from "../JobPostings/NewJobForm/NewJobForm"
 import classes from "./Header.module.css"
 
 interface HeaderProps {
-	formDataHandler: (formData: formDataTypes) => void
+	formDataHandler: (formData: FormDataTypes) => void
 }
 
 const Header: React.FC<HeaderProps> = (props) => {

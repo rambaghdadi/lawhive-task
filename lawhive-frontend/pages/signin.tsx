@@ -37,30 +37,28 @@ export default function Signup() {
 	}
 
 	return (
-		<>
-			<div className="signin">
-				<h1>Sign In</h1>
-				<form onSubmit={formHandler}>
-					<TextInput
-						icon={<At size={14} />}
-						placeholder="Your Email"
-						label="Email"
-						required
-						type="email"
-						id="email"
-						ref={email}
-					/>
-					<PasswordInput
-						icon={<Hash size={14} />}
-						placeholder="Password"
-						label="Password"
-						ref={password}
-						id="password"
-						required
-					/>
-					<Button type="submit">Submit</Button>
-				</form>
-			</div>
-		</>
+		<div className="signin">
+			<h1>Sign In</h1>
+			<form onSubmit={formHandler}>
+				<TextInput
+					icon={<At size={14} />}
+					placeholder="Your Email"
+					label="Email"
+					required
+					type="email"
+					id="email"
+					ref={email}
+				/>
+				<PasswordInput
+					icon={<Hash size={14} />}
+					placeholder="Password"
+					label="Password"
+					ref={password}
+					id="password"
+					required
+				/>
+				<Button type="submit">Submit</Button>
+			</form>
+		</div>
 	)
 }

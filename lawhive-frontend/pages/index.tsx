@@ -3,13 +3,13 @@ import type { NextPage } from "next"
 import { useEffect, useState } from "react"
 import Header from "../components/Header/Header"
 import JobsList from "../components/JobPostings/JobsList/JobsList"
-import { formDataTypes, jobListingTypes } from "../utils/types"
+import { FormDataTypes, JobListingTypes } from "../utils/types"
 
 const Home: NextPage = () => {
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState(false)
 	const [settlementError, setSettlementError] = useState("")
-	const [jobs, setJobs] = useState<jobListingTypes[]>([])
+	const [jobs, setJobs] = useState<JobListingTypes[]>([])
 
 	useEffect(() => {
 		getJobs()
@@ -31,7 +31,7 @@ const Home: NextPage = () => {
 		}
 	}
 
-	async function formDataHandler(formData: formDataTypes) {
+	async function formDataHandler(formData: FormDataTypes) {
 		try {
 			const response = await fetch(`http://localhost:4000/api/joblist`, {
 				method: "POST",
